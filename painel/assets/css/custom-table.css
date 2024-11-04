@@ -1,0 +1,108 @@
+/* Ajusta o comportamento da tabela */
+.table {
+width: 100%;
+border-collapse: collapse; /* Garante que as bordas da tabela estejam colapsadas */
+}
+
+/* Melhore a aparência das células e adicione espaçamento */
+.table th, .table td {
+padding: 8px; /* Adiciona um pouco de espaço interno */
+border: 1px solid #ddd; /* Adiciona bordas às células */
+text-align: left; /* Alinha o texto à esquerda */
+white-space: nowrap; /* Mantém o texto em uma única linha por padrão */
+}
+
+/* Adicione estilos para o cabeçalho fixo e ajuste a cor de fundo */
+.table thead th {
+background-color: #f4f4f4; /* Adiciona uma cor de fundo ao cabeçalho */
+position: sticky; /* Faz o cabeçalho ficar fixo ao rolar */
+top: 0; /* Alinha o cabeçalho no topo */
+z-index: 1; /* Garante que o cabeçalho fique sobreposto ao corpo da tabela */
+}
+
+/* Ajustes para dispositivos menores */
+@media (max-width: 768px) {
+.table thead {
+ display: none; /* Oculta o cabeçalho da tabela em dispositivos menores */
+}
+
+.table tr {
+ display: block;
+ margin-bottom: 1em;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+ overflow: hidden;
+}
+
+.table td {
+ display: block;
+ text-align: right;
+ position: relative;
+ padding-left: 50%;
+ border-bottom: 1px solid #ddd;
+ white-space: normal; /* Permite que o texto quebre linhas */
+ word-wrap: break-word; /* Quebra palavras longas para evitar sobreposição */
+ overflow-wrap: break-word; /* Quebra palavras longas para evitar sobreposição */
+}
+
+.table td::before {
+ content: attr(data-label);
+ position: absolute;
+ left: 0;
+ width: 45%;
+ padding-left: 1em;
+ font-weight: bold;
+ white-space: nowrap; /* Mantém o rótulo em uma linha */
+}
+
+.table td:last-child {
+ border-bottom: 0;
+}
+
+/* Quebra de linha para links */
+.table td a {
+ word-wrap: break-word;
+ overflow-wrap: break-word;
+}
+}
+
+/* Ajusta o comportamento da tabela em larguras menores */
+@media (max-width: 429px) {
+.table td {
+ padding-left: 1em; /* Adiciona um pouco de padding para garantir que o texto não fique colado às bordas */
+ font-size: 14px; /* Ajusta o tamanho da fonte para melhorar a legibilidade */
+}
+
+.table tr {
+ display: block;
+ margin-bottom: 1em;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+ overflow: hidden;
+}
+
+.table td {
+ display: block;
+ text-align: center;
+ position: relative;
+ /* padding-left: 32%; */
+ border-bottom: 1px solid #ddd;
+ white-space: normal; /* Permite que o texto quebre linhas */
+ word-wrap: break-word; /* Quebra palavras longas para evitar sobreposição */
+ overflow-wrap: break-word; /* Quebra palavras longas para evitar sobreposição */
+}
+
+.table td::before {
+ content: attr(data-label);
+ position: relative;
+ width: auto;
+ padding-left: 0;
+ font-weight: normal;
+ display: block;
+ text-align: center;
+}
+
+.table td:last-child {
+ border-bottom: 0;
+}
+}

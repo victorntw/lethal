@@ -1,0 +1,108 @@
+# Carrega as variáveis de ambiente do PHP (coloque isso no início do seu .htaccess)
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{HTTP_HOST} !^\. [NC]
+RewriteRule ^(.+[^/])/$ http://%{HTTP_HOST}/$1 [R=301,L]
+AddType application/x-httpd-php .html .htm 
+
+# Verifica a variável de ambiente HTTPS_VALUE e redireciona conforme necessário
+SetEnvIf ^ HTTPS_VALUE=(.*) ENV_HTTPS_VALUE=$1
+
+RewriteCond %{ENV_HTTPS_VALUE} ^on$
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{ENV_HTTPS_VALUE} ^off$
+RewriteCond %{HTTPS} on
+RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Restante das suas regras de reescrita
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index$ index.php
+RewriteRule ^painel/$ painel
+
+# Páginas Principais
+RewriteRule ^menus$ menus.php
+RewriteRule ^login$ login.php
+RewriteRule ^blogs$ blogs.php
+RewriteRule ^usuarios$ usuarios.php
+RewriteRule ^visitantes$ visitantes.php
+RewriteRule ^genero$ genero.php
+RewriteRule ^projetos$ projetos.php
+RewriteRule ^processos$ processos.php
+RewriteRule ^representantes$ representantes.php
+RewriteRule ^cargos$ cargos.php
+RewriteRule ^agenda$ agenda.php
+RewriteRule ^areas$ areas.php
+RewriteRule ^pautas$ pautas.php
+RewriteRule ^configuracoes$ configuracoes.php
+RewriteRule ^configuracoes-popup$ configuracoes-popup.php
+RewriteRule ^metas-tags$ metas-tags.php
+RewriteRule ^configuracoes-aparencia$ configuracoes-aparencia.php
+RewriteRule ^alterar-senha$ alterar-senha.php
+
+# ADD PAGES
+RewriteRule ^add-usuario$ add-usuario.php
+RewriteRule ^add-visitante$ add-visitante.php
+RewriteRule ^add-genero$ add-genero.php
+RewriteRule ^add-projeto$ add-projeto.php
+RewriteRule ^add-processo$ add-processo.php
+RewriteRule ^add-representante$ add-representante.php
+RewriteRule ^add-cargo$ add-cargo.php
+RewriteRule ^add-agenda$ add-agenda.php
+RewriteRule ^add-area$ add-area.php
+
+
+# EDIT PAGES
+RewriteRule ^editar-visitante$ editar-visitante.php
+RewriteRule ^editar-genero$ editar-genero.php
+RewriteRule ^editar-projeto$ editar-projeto.php
+RewriteRule ^editar-processo$ editar-processo.php
+RewriteRule ^editar-representante$ editar-representante.php
+RewriteRule ^editar-cargo$ editar-cargo.php
+RewriteRule ^editar-agenda$ editar-agenda.php
+RewriteRule ^editar-usuario$ editar-usuario.php
+
+# VIEW PAGES
+RewriteRule ^visualizar-agenda$ visualizar-agenda.php
+
+# antigos
+# RewriteRule ^servicos/([a-zA-Z-0-9-_]+)$ desc-servico.php?id=$1
+# RewriteRule ^produtos/categoria/([a-zA-Z-0-9-_]+)$ produtos.php?url_categoria=$1
+# RewriteRule ^busca$ busca.php
+# RewriteRule ^sobre$ sobre.php
+# RewriteRule ^sucesso$ msg-envio.php
+# RewriteRule ^downloads$ downloads.php
+# RewriteRule ^robots.txt$ robots.txt
+
+# Configurações de cache
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresByType image/jpg "access 12 month"
+    ExpiresByType image/gif "access 12 month"
+    ExpiresByType image/jpeg "access 12 month"
+    ExpiresByType image/png "access 12 month"
+    ExpiresByType image/webp "access 12 month"
+    ExpiresByType text/css "access 12 month"
+    ExpiresByType text/javascript "access 12 month"
+    ExpiresByType application/x-javascript "access plus 2 month"
+    ExpiresByType text/javascript "access plus 2 month"
+    ExpiresByType application/javascript "access plus 2 month"
+    ExpiresByType image/x-icon "access plus 12 month"
+    ExpiresByType image/icon "access plus 12 month"
+    ExpiresByType application/x-ico "access plus 12 month"
+    ExpiresByType application/ico "access plus 12 month"
+    ExpiresDefault "access 3 month"
+</IfModule>
+
+# Desativa ETags
+<ifModule mod_headers.c>   
+    Header unset ETag
+</ifModule>
+FileETag None
+
+# Páginas de erro personalizadas
+ErrorDocument 404 /erros/404.php
+ErrorDocument 500 /erros/500.php
+ErrorDocument 403 /erros/403.php
